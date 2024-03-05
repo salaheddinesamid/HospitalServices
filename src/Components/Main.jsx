@@ -88,7 +88,8 @@ export function Main(){
                                 <div className="row mt-3 mb-3" style={{
                                     backgroundColor:"white",
                                     borderRadius:"10px",
-                                    height:"80px"
+                                    height:"80px",
+                                    borderLeft:"5px solid green"
                                 }}>
                                     <div className="col-xl-12">
                                         <div className="row align-items-center">
