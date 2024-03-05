@@ -1,0 +1,23 @@
+{
+    "appointments":[
+        {
+            "date":"5-December-2023",
+            "doctorDetails":"Dr. Messy Williams",
+            "symptoms":"Irregular Pulse",
+            "diagnosis":"Arrhythmia",
+            "img":"./doctor1.png"
+        },
+        {
+            "date":"12-November-2023",
+            "doctorDetails":"Dr. Messy Williams",
+            "symptoms":"Irregular Pulse",
+            "diagnosis":"Arrhythmia"
+        },
+        {
+            "date":"03-May-2023",
+            "doctorDetails":"Dr. Petter Pettigrew",
+            "symptoms":"Itchiness",
+            "diagnosis":"Allergy"
+        }
+    ]
+}
