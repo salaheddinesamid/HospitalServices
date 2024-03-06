@@ -5,8 +5,10 @@ import {faUserDoctor} from "@fortawesome/free-solid-svg-icons"
 import {faCalendarCheck} from "@fortawesome/free-solid-svg-icons"
 import {faBedPulse, faTrash} from "@fortawesome/free-solid-svg-icons"
 import Appointments from "../Appointments.json"
-import iconFooter from "../logo.png"
+import iconFooter from "../logo.png";
+import {useNavigate} from "react-router-dom";
 export function Main(){
+    const navigate = useNavigate();
     let appointments = Appointments.appointments;
     let services = [{
         "name":"Dashboard",
@@ -57,7 +59,9 @@ export function Main(){
                         <h4>Appointment History</h4>
                     </div>
                     <div className="col-xl-3 justify-content-end">
-                        <button className="btn btn-primary" style={{
+                        <button className="btn btn-primary" onClick={()=>{
+                            navigate("appointments/add")
+                        }} style={{
                             padding:"5px 10px",
                             fontWeight:"bold"
                         }}>
