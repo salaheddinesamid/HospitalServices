@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faHeart} from "@fortawesome/free-solid-svg-icons"
 import {faUserDoctor} from "@fortawesome/free-solid-svg-icons"
@@ -7,12 +7,19 @@ import {faBedPulse, faTrash} from "@fortawesome/free-solid-svg-icons"
 import Appointments from "../Appointments.json"
 import iconFooter from "../logo.png";
 import {useNavigate} from "react-router-dom";
+import  Axios  from "axios"
 export function Main(){
+    const axios = Axios
+    let[appointmentsData,setAppointmentsData] = useState([])
+    useEffect(()=>{
+        let req = axios.get("http://localhost:8080/appointments/").then(res=>setAppointmentsData(res.data))
+    })
     const navigate = useNavigate();
     let appointments = Appointments.appointments;
     let services = [{
         "name":"Dashboard",
-        "icon" :faHeart
+        "icon" :faHeart,
+        "router":"/"
     },
     {
         "name" :"Add Doctor",
@@ -20,7 +27,8 @@ export function Main(){
     },
     {
         "name":"Add Appointment",
-        "icon" :faCalendarCheck
+        "icon" :faCalendarCheck,
+        "router":"/appointments/add"
     },{
         "name" :"Add Patient",
         "icon" :faBedPulse
@@ -36,7 +44,11 @@ export function Main(){
                                 <div className="col-xl-1">
                                   <FontAwesomeIcon icon={service.icon}/>
                                 </div>
-                                <div className="col">
+                                <div className="col" style={{
+                                    cursor:"pointer"
+                                }} onClick={()=>{
+                                    navigate(service.router)
+                                }}>
                                    <p>{service.name}</p>
                                 </div>
                             
@@ -88,7 +100,13 @@ export function Main(){
                                        <p><b>DIAGNOSIS</b></p>
                                 </div>
                             </div>
-                            {appointments && appointments.map((appointment)=>(
+                            <div style={{
+                                height:"50px",
+                                position:"relative",
+                                
+                            }}>
+                                
+                            {appointmentsData && appointmentsData.map((appointment)=>(
                                 <div className="row mt-3 mb-3" style={{
                                     backgroundColor:"white",
                                     borderRadius:"10px",
@@ -101,10 +119,10 @@ export function Main(){
                                                 <p>{appointment.date}</p>
                                             </div>
                                             <div className="col-xl-3">
-                                                <p>{appointment.doctorDetails}</p>
+                                                <p>{appointment.doctor}</p>
                                             </div>
                                             <div className="col-xl-3">
-                                                <p>{appointment.symptoms}</p>
+                                                <p>{appointment.symptom}</p>
                                             </div>
                                             <div className="col-xl-3">
                                                 <p>{appointment.diagnosis}</p>
@@ -115,12 +133,20 @@ export function Main(){
                                                 <button className="btn btn-danger" style={{
                                                     padding:"5px 20px",
                                                     fontWeight:"bold"
+                                                }} onClick={()=>{
+                                                    fetch(`http://localhost:8080/appointments/delete/${appointment.id}`,{
+                                                       method:"DELETE",
+                                                       headers:{"Content-Type":"application/json"},
+                                                
+                            })
                                                 }}><FontAwesomeIcon icon={faTrash}/>Delete</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             ))}
+                            </div>
+                            
                         </div>
                     </div>
                 </div>
