@@ -3,16 +3,18 @@ import Axios from "axios";
 import {useNavigate} from "react-router-dom"
 import symptoms from "../Symptoms.json";
 import doctors from "../Doctors.json"
+import locations from "../ma.json"
 export function AddAppointment(){
     const axios = Axios
     const sympData = symptoms.symptoms;
     const doctorsData = doctors.doctors
+    const locationData = locations
     let[patient,setPatient] = useState("");
     let[doctor,setDoctor] = useState("");
     let[location,setLocation] = useState("")
     let[diagnosis,setDiagnosis] = useState("")
     let [symptom,setSymptom] = useState()
-    let date = new Date().getHours().toString();
+    let date = new Date()
     const navigate = useNavigate()
     let appointment = {patient,doctor,date,diagnosis,symptom};
     return(
@@ -46,9 +48,18 @@ export function AddAppointment(){
                       }}/>
                     </div>
                     <div className="col-xl-5">
-                      <input className="form-control" placeholder="Location" value={location} onChange={(e)=>{
-                        setLocation(e.target.value)
-                      }}/>
+                    <select className="form-select" aria-label="Select the Symptom" onChange={(e)=>{
+                           setLocation(e.target.value)
+                      }}>
+                    
+                        {locationData.map((element)=>(
+                
+                              <option value={element.city}
+                              >{element.city}</option>
+                               
+                        
+                        ))}
+                    </select>
                     </div>
                 </div>
                 <div className="row mt-3 mb-3">
